@@ -1,0 +1,5 @@
+@media (min-width: 400px) and (max-width: 500px) {
+  .custom-style {
+     height: 500px;
+  }
+}

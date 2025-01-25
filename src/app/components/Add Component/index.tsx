@@ -43,126 +43,63 @@ const AddComponents: React.FC<AddCompprops> = ({ isVisible, close }) => {
             }),
     });
 
-    // const addComp = async (data: any) => {
-
-    //     try {
-    //         let uploadedFile;
-    //         // Check if an image file is provided
-    //         if (data.image) {
-    //             // Upload the file and get the response (metadata)
-    //             uploadedFile = await addCompServices.uploadFile(data.image);
-    //             console.info('Uploaded File:', uploadedFile.$id); // Log the file metadata
-
-
-    //         }
-    //         // Show loading toast while updating
-    //         const toastId = toast.loading("Adding component...", {
-    //             position: "top-right",
-    //             style: {
-
-    //                 color: "black  "
-    //             },
-    //             hideProgressBar: false,
-    //             transition: Zoom,
-    //         });
-    //         // Now call createComponents with the file ID or null if no file was uploaded
-    //         const component = await addCompServices.createComponents({
-    //             name: data.name,
-    //             category: data.category,
-    //             location: data.location,
-    //             quantity: data.quantity,
-    //             imageFile: uploadedFile ? uploadedFile.$id : null, // Pass the file ID or null if no file
-    //         });
-    //         // Close the modal
-    //         close();
-
-    //         // Close the loading toast
-    //         toast.dismiss(toastId);
-    //         toast.success("Component Added successfully!", {
-    //             position: "top-right",
-    //             autoClose: 1000,
-    //             transition: Zoom,
-    //             hideProgressBar: false,
-    //         });
-
-    //         window.location.reload();
-
-
-    //     } catch (error: any) {
-    //         console.error('Error creating component:', error.message || error);
-    //         // Close the loading toast
-    //         toast.dismiss(toastId);
-
-    //         // Show error toast
-    //         toast.error("Failed to Add new component. Please try again.", {
-    //             position: "top-right",
-    //             autoClose: 5000,
-    //             transition: Zoom,
-    //             hideProgressBar: false,
-    //         });
-    //     }
-    // };
+   
 
     const addComp = async (data: any) => {
-        let toastId: any = null; // Initialize toastId to null
+        const toastId = toast.loading("Adding component...", {
+            position: "top-right",
+            style: {
+                color: "#3B82F6",
+                fontWeight: "bold",
+                border: "1px solid blue"
 
+            },
+            hideProgressBar: false,
+            transition: Zoom,
+        });
+    
         try {
             let uploadedFile;
+    
             // Check if an image file is provided
             if (data.image) {
-                // Upload the file and get the response (metadata)
                 uploadedFile = await addCompServices.uploadFile(data.image);
                 console.info('Uploaded File:', uploadedFile.$id); // Log the file metadata
             }
-
-            // Show loading toast while updating
-            toastId = toast.loading("Adding component...", {
-                position: "top-right",
-                style: {
-                    color: "black"
-                },
-                hideProgressBar: false,
-                transition: Zoom,
-            });
-
-            // Now call createComponents with the file ID or null if no file was uploaded
-            const component = await addCompServices.createComponents({
+    
+            // Call createComponents with the file ID or null if no file was uploaded
+            await addCompServices.createComponents({
                 name: data.name,
                 category: data.category,
                 location: data.location,
                 quantity: data.quantity,
-                imageFile: uploadedFile ? uploadedFile.$id : null, // Pass the file ID or null if no file
+                imageFile: uploadedFile ? uploadedFile.$id : null,
             });
-
-            // Close the modal
+    
+            // Update the toast to indicate success
+            toast.update(toastId, {
+                render: "Component Added successfully!",
+                type: "success",
+                isLoading: false,
+                autoClose: 2000,
+            });
+    
+            // Close the modal and refresh the page
             close();
-
-            // Close the loading toast
-            if (toastId) toast.dismiss(toastId);
-            toast.success("Component Added successfully!", {
-                position: "top-right",
-                autoClose: 1000,
-                transition: Zoom,
-                hideProgressBar: false,
-            });
-
             window.location.reload();
-
         } catch (error: any) {
             console.error('Error creating component:', error.message || error);
-
-            // Close the loading toast if it was created
-            toast.dismiss(toastId);
-
-            // Show error toast
-            toast.error("Failed to Add new component. Please try again.", {
-                position: "top-right",
+    
+            // Update the toast to indicate an error
+            toast.update(toastId, {
+                render: "Failed to Add new component. Please try again.",
+                type: "error",
+                isLoading: false,
                 autoClose: 5000,
-                transition: Zoom,
-                hideProgressBar: false,
             });
         }
     };
+    
 
 
 

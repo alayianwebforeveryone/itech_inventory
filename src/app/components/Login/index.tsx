@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import authService from "@/app/appwrite/auth";
-import {login as loginAction} from "../../redux/slices/authSlice"
+import { login as loginAction } from "../../redux/slices/authSlice"
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 interface LoginFormValues {
@@ -32,22 +32,44 @@ const Login: React.FC = () => {
       .required("Password is required"),
   });
 
-  const login = async (data:LoginFormValues) => {
+  const login = async (data: LoginFormValues) => {
     setError("");
-    try {
-      const session:any = await authService.login(data);
-      if (session) {
-        const userData = await authService.getCurrentUser();
-        dispatch(loginAction(userData))
-        toast.success("Login Successfully!")
-        localStorage.setItem("user", JSON.stringify(userData));
-
-        router.push("/");
+    await toast.promise(
+      authService.login(data).then(async (session: any) => {
+        if (session) {
+          const userData = await authService.getCurrentUser();
+          dispatch(loginAction(userData));
+          localStorage.setItem("user", JSON.stringify(userData));
+          router.push("/");
+        }
+      }),
+      {
+        pending: {
+          render: "Logging in...",
+          style: {
+            color: "#3B82F6",
+            fontWeight: "bold",
+             border: "1px solid blue"
+          },
+        },
+        success: {
+          render: "Login successful! ",
+          style: {
+            color: "#3B82F6",
+            fontWeight: "bold",
+             border: "1px solid blue"
+          },
+        },
+        error: {
+          render: "Invalid Credentials!",
+          style: {
+            background: "", // Red background
+            color: "red",
+            fontWeight: "bold",
+          },
+        },
       }
-    } catch (error:any) {
-      setError(error.message);
-      toast.warn(error.message)
-    }
+    );
   };
 
 

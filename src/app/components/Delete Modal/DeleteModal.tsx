@@ -47,10 +47,31 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ isVisible, close, compId }) =
             await toast.promise(
                 addCompServices.deleteComp(compId),
                 {
-                    pending: 'Deleting component...',
-                    success: 'Deleted Successfully!',
-                    error: 'Failed to delete component. Please try again.',
-                }
+                    pending: {
+                      render: "Deleting ...",
+                      style: {
+                        color: "#3B82F6",
+                        fontWeight: "bold",
+                         border: "1px solid blue"
+                      },
+                    },
+                    success: {
+                      render: "Delete successful! ",
+                      style: {
+                        color: "#3B82F6",
+                        fontWeight: "bold",
+                         border: "1px solid blue"
+                      },
+                    },
+                    error: {
+                      render: "Something went wrong. Please try again.",
+                      style: {
+                        background: "", // Red background
+                        color: "red",
+                        fontWeight: "bold",
+                      },
+                    },
+                  }
             );
             close();
             window.location.reload()
@@ -68,7 +89,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ isVisible, close, compId }) =
             id='container'
             className="fixed inset-0 z-30 bg-black/25 flex justify-center items-center">
 
-            <div className="   hideScrollbar bg-[#EBE2F5] w-[80%] md:w-[50%] xl:w-[40%] mt-14  h-[35%] pb-8 rounded-xl overflow-y-scroll hideScrollbar">
+            <div className="   hideScrollbar bg-[#EBE2F5] w-[80%] md:w-[50%] xl:w-[40%] mt-14  h-[40%] md:h-[35%] pb-8 rounded-xl overflow-y-scroll hideScrollbar">
                 {/* header */}
                 <div className="flex leading-none items-center sticky top-0 bg-[#60B0F4] left-0 box-border justify-between w-full overflow-hidden z-50 border-b-2 py-3">
                     <div className="flex justify-start mx-6 py-3 w-full items-baseline">
@@ -79,7 +100,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ isVisible, close, compId }) =
                     </div>
                 </div>
                 <h2 className="md:text-[25px] px-2 md:px-8 text-md  my-8 text-center text-[#7B7B7B] font-bold mb-4">Are you sure you want to delete this component?</h2>
-                <div className='flex justify-between px-8 md:px-16 pt-12  '>
+                <div className='flex justify-between px-8 md:px-16 lg:px-60 pt-12  '>
                     <button
                         onClick={close}
                         className="border hover:bg-[#60B0F4] hover:text-white border-blue-600 px-4 py-2 rounded-lg ">No</button>

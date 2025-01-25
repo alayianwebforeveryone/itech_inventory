@@ -31,7 +31,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     // const currentUser = useSelector((state: any) => state.auth.userData?.name)
     const pathname = usePathname();
     const [openMenu, setOpenMenu] = useState<boolean>(false);
-    const { status, userData, } = useAuth()
+    const { userData, } = useAuth()
 
 
 
@@ -60,52 +60,70 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                         className="cursor-pointer"
                     />
                 </div>
-                <ul className="p-4  flex flex-col space-y-8">
-                    <Link
-                        className={`block px-4 md:text-lg text-md py-2 text-sm border-b  rounded hover:bg-[#36a5eb] hover:text-white ${pathname === '/' ? 'font-bold text-white bg-[#36a5eb]' : ''
-                            }`}
-                        href="/">
-                        <li>
-                            <div className="flex items-center space-x-4">
-                                <Image src={dashboardIcon} alt="dashboard" width={20} height={20} />
-                                <span className=" md:text-xl text-md    "> {userData?.name} Dashboard</span>
-                            </div>
-                        </li>
-                    </Link>
-
-                    {/* expoert and logout */}
-
-                    <Link href="/export" className={`cursor-pointer  ${pathname === '/export' ? 'font-bold text-white bg-[#36a5eb]' : ''}`}  >
-                        <div className={`flex items-center px-4 border-b py-2 justify-between hover:bg-[#36a5eb] hover:text-white hover:font-bold  `}  >
-                            <div className="flex items-center space-x-4">
-                                <Image src={exportIcon} alt="export" width={20} height={20} />
-                                <span className="md:text-xl text-md ">Export </span>
-                            </div>
+               
+            <ul className="p-4 flex flex-col space-y-8">
+                <Link
+                    href="/"
+                    onClick={onClose} // Close sidebar on click
+                    className={`block px-4 md:text-lg text-md py-2 text-sm border-b rounded hover:bg-[#36a5eb] hover:text-white ${pathname === '/' ? 'font-bold text-white bg-[#36a5eb]' : ''
+                        }`}
+                >
+                    <li>
+                        <div className="flex items-center space-x-4">
+                            <Image src={dashboardIcon} alt="dashboard" width={20} height={20} />
+                            <span className="md:text-xl text-md">{userData?.name} Dashboard</span>
                         </div>
-                    </Link>
-                    <Link href="/logout" className={`cursor-pointer  ${pathname === '/logout' ? 'font-bold text-white bg-[#36a5eb]' : ''}`}  >
-                        <div className={`flex items-center px-4 border-b py-2 justify-between hover:bg-[#36a5eb] hover:text-white hover:font-bold  `}  >
-                            <div className="flex items-center space-x-4">
-                                <Image src={exportIcon} alt="export" width={20} height={20} />
-                                <span className="md:text-xl text-md ">Logout </span>
-                            </div>
-                        </div>
-                    </Link>
+                    </li>
+                </Link>
 
-                </ul>
-            </div>
-            {/* Overlay */}
-            {isOpen && (
-                <div
-                    className="fixed top-0 z-50 sm:left-[45%] left-[100%] md:left-[43%] lg:left-[32%] xl:left-[28%]  2xl:left-[23%]   h-full right-0 bg-black/25"
-                    onClick={onClose}
-                ></div>
-            )}
-            {/* add componrnts modal  */}
-            <AddComponents
-                isVisible={showModal}
-                close={() => setShowModal(false)}
-            />
+                <Link
+                    href="/export"
+                    onClick={onClose} // Close sidebar on click
+                    className={`cursor-pointer ${pathname === '/export' ? 'font-bold text-white bg-[#36a5eb]' : ''
+                        }`}
+                >
+                    <div
+                        className={`flex items-center px-4 border-b py-2 justify-between hover:bg-[#36a5eb] hover:text-white hover:font-bold`}
+                    >
+                        <div className="flex items-center space-x-4">
+                            <Image src={exportIcon} alt="export" width={20} height={20} />
+                            <span className="md:text-xl text-md">Export</span>
+                        </div>
+                    </div>
+                </Link>
+
+                <Link
+                    href="/logout"
+                    onClick={onClose} // Close sidebar on click
+                    className={`cursor-pointer ${pathname === '/logout' ? 'font-bold text-white bg-[#36a5eb]' : ''
+                        }`}
+                >
+                    <div
+                        className={`flex items-center px-4 border-b py-2 justify-between hover:bg-[#36a5eb] hover:text-white hover:font-bold`}
+                    >
+                        <div className="flex items-center space-x-4">
+                            <Image src={logoutIcon} alt="logout" width={20} height={20} />
+                            <span className="md:text-xl text-md">Logout</span>
+                        </div>
+                    </div>
+                </Link>
+            </ul>
+
+        </div >
+            {/* Overlay */ }
+    {
+        isOpen && (
+            <div
+                className="fixed top-0 z-50 sm:left-[45%] left-[100%] md:left-[43%] lg:left-[32%] xl:left-[28%]  2xl:left-[23%]   h-full right-0 bg-black/25"
+                onClick={onClose}
+            ></div>
+        )
+    }
+    {/* add componrnts modal  */ }
+    <AddComponents
+        isVisible={showModal}
+        close={() => setShowModal(false)}
+    />
         </>
     )
 

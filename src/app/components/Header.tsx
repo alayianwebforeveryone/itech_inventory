@@ -1,7 +1,7 @@
 
 
 "use client"
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import Image from 'next/image';
 import menuIcon from '../../../Assets/icons/menu.svg';
 import logo from '../../../Assets/icons/i-techlogo 1.svg';
@@ -39,10 +39,10 @@ const Header: React.FC = () => {
                             <Image
                                 src={menuIcon}
                                 alt="menu"
-                                width={40}
-                                height={60}
+                                width={20}
+                                height={30}
                                 onClick={toggleSidebar} // Toggle sidebar on menu click
-                                className="cursor-pointer md:w-[40] md:h-[60] w-[30] h-[40] "
+                                className="cursor-pointer md:w-[40] md:h-[60] "
                             />
 
                         }

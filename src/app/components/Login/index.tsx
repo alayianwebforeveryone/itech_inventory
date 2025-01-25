@@ -38,6 +38,7 @@ const Login: React.FC = () => {
       if (session) {
         const userData = await authService.getCurrentUser();
         dispatch(loginAction(userData))
+        localStorage.setItem("user", JSON.stringify(userData));
         router.push("/");
       }
     } catch (error:any) {

@@ -19,6 +19,7 @@ const Header: React.FC = () => {
 
     useEffect(() => {
         if (!status) { // Only fetch data if the user is not logged in
+            //@ts-ignore
             dispatch(fetchUserData());
         }
     }, [status, dispatch]);

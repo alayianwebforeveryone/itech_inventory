@@ -31,7 +31,7 @@ const CompCard: React.FC<CompCardProps> = ({ Cardkey, data }: CompCardProps) => 
       className={`bg-gray-200 hover:border hover:border-black border shadow-lg rounded-xl custom-style w-full px-3 text-black py-3  `}
       
     >
-      <figure className="relative w-full h-[300px]"> {/* Explicit height for the image */}
+      <figure className="relative w-full h-[150px] md:h-[250px]"> {/* Explicit height for the image */}
         <Image
           key={Cardkey}
           className="rounded-lg object-cover"

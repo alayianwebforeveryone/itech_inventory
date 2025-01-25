@@ -31,12 +31,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     // const currentUser = useSelector((state: any) => state.auth.userData?.name)
     const pathname = usePathname();
     const [openMenu, setOpenMenu] = useState<boolean>(false);
-    const {status, userData, } = useAuth()
+    const { status, userData, } = useAuth()
 
-      
 
-   
-   
+
+
+
 
     const toggleMenu = () => {
         setOpenMenu(!openMenu);
@@ -60,60 +60,40 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                         className="cursor-pointer"
                     />
                 </div>
-                <ul className="p-4 space-y-4">
+                <ul className="p-4  flex flex-col space-y-8">
                     <Link
-                         className={`block px-4 md:text-lg text-md py-2 text-sm border-b  rounded hover:bg-[#36a5eb] hover:text-white ${pathname === '/' ? 'font-bold text-white bg-[#36a5eb]' : ''
-                         }`}
+                        className={`block px-4 md:text-lg text-md py-2 text-sm border-b  rounded hover:bg-[#36a5eb] hover:text-white ${pathname === '/' ? 'font-bold text-white bg-[#36a5eb]' : ''
+                            }`}
                         href="/">
                         <li>
-                                <div className="flex items-center space-x-4">
-                                    <Image src={dashboardIcon} alt="dashboard" width={20} height={20} />
-                                    <span className=" md:text-xl text-md    "> {userData?.name} Dashboard</span>
-                                </div>
+                            <div className="flex items-center space-x-4">
+                                <Image src={dashboardIcon} alt="dashboard" width={20} height={20} />
+                                <span className=" md:text-xl text-md    "> {userData?.name} Dashboard</span>
+                            </div>
                         </li>
                     </Link>
 
-
-
                     {/* expoert and logout */}
 
-                    <Link href= "/export"
-                        className='cursor-pointer'
-                        >
-                        <div
-
-                            className={`flex items-center px-4 border-b py-3 justify-between `}
-                        >
+                    <Link href="/export" className={`cursor-pointer  ${pathname === '/export' ? 'font-bold text-white bg-[#36a5eb]' : ''}`}  >
+                        <div className={`flex items-center px-4 border-b py-2 justify-between hover:bg-[#36a5eb] hover:text-white hover:font-bold  `}  >
                             <div className="flex items-center space-x-4">
                                 <Image src={exportIcon} alt="export" width={20} height={20} />
                                 <span className="md:text-xl text-md ">Export </span>
                             </div>
                         </div>
                     </Link>
-                    <Link href="/logout">
-                        <div
-                            className={`flex items-center px-4 border-b py-3 justify-between 
-                                ${pathname === '/logout' ? 'font-bold text-white bg-[#36a5eb]' : ''
-                                }
-                                `}
-                        >
+                    <Link href="/logout" className={`cursor-pointer  ${pathname === '/logout' ? 'font-bold text-white bg-[#36a5eb]' : ''}`}  >
+                        <div className={`flex items-center px-4 border-b py-2 justify-between hover:bg-[#36a5eb] hover:text-white hover:font-bold  `}  >
                             <div className="flex items-center space-x-4">
-                                <Image src={logoutIcon} alt="logout" width={20} height={20} />
-                                <span className="md:text-xl text-md ">Logout</span>
+                                <Image src={exportIcon} alt="export" width={20} height={20} />
+                                <span className="md:text-xl text-md ">Logout </span>
                             </div>
                         </div>
                     </Link>
 
-
-
-
-
-
                 </ul>
             </div>
-
-
-
             {/* Overlay */}
             {isOpen && (
                 <div
@@ -121,15 +101,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                     onClick={onClose}
                 ></div>
             )}
-
-
-
             {/* add componrnts modal  */}
             <AddComponents
                 isVisible={showModal}
                 close={() => setShowModal(false)}
             />
-           
         </>
     )
 

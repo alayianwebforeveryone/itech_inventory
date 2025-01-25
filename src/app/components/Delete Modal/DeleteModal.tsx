@@ -20,9 +20,10 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ isVisible, close, compId }) =
     const router = useRouter()
 
     // handle on rest space click
-    const handleClose = (e) => {
-        if (e.target.id === "container") close();
+    const handleClose = (e: React.MouseEvent<HTMLDivElement>) => {
+        if ((e.target as HTMLDivElement).id === "container") close();
     };
+    
 
     // disabling bg scrollign
 

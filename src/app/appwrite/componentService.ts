@@ -56,26 +56,6 @@ export class AddCompServices {
     
     
 
-    // Get details of a specific event
-    async getEventById(eventId: any) {
-        try {
-            // const user = await authService.getCurrentUser();
-            const event = await this.databases.getDocument(
-                conf.appwriteDatabaseId,
-                conf.appwriteCollectionId,
-                eventId
-            );
-
-            if (event.creatorUserId !== user.$id) {
-                throw new Error('You are not authorized to view this event.');
-            }
-
-            return event;
-        } catch (error) {
-            console.error('EventService :: getEventById() ::', error);
-            throw error;
-        }
-    }
 
     // Get all events created by the user
     async getAllComp(searchTerm?: string) {

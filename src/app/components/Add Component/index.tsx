@@ -38,12 +38,73 @@ const AddComponents: React.FC<AddCompprops> = ({ isVisible, close }) => {
             .oneOf(['SMD', 'Through hole'], 'Invalid category'),
         location: Yup.string().required('Location is required'),
         image: Yup.mixed()
-            .test('fileFormat', 'Only PNG or JPG files are allowed', (value) => {
+            .test('fileFormat', 'Only PNG or JPG files are allowed', (value: any) => {
                 return value && (value.type === 'image/png' || value.type === 'image/jpeg');
             }),
     });
 
+    // const addComp = async (data: any) => {
+
+    //     try {
+    //         let uploadedFile;
+    //         // Check if an image file is provided
+    //         if (data.image) {
+    //             // Upload the file and get the response (metadata)
+    //             uploadedFile = await addCompServices.uploadFile(data.image);
+    //             console.info('Uploaded File:', uploadedFile.$id); // Log the file metadata
+
+
+    //         }
+    //         // Show loading toast while updating
+    //         const toastId = toast.loading("Adding component...", {
+    //             position: "top-right",
+    //             style: {
+
+    //                 color: "black  "
+    //             },
+    //             hideProgressBar: false,
+    //             transition: Zoom,
+    //         });
+    //         // Now call createComponents with the file ID or null if no file was uploaded
+    //         const component = await addCompServices.createComponents({
+    //             name: data.name,
+    //             category: data.category,
+    //             location: data.location,
+    //             quantity: data.quantity,
+    //             imageFile: uploadedFile ? uploadedFile.$id : null, // Pass the file ID or null if no file
+    //         });
+    //         // Close the modal
+    //         close();
+
+    //         // Close the loading toast
+    //         toast.dismiss(toastId);
+    //         toast.success("Component Added successfully!", {
+    //             position: "top-right",
+    //             autoClose: 1000,
+    //             transition: Zoom,
+    //             hideProgressBar: false,
+    //         });
+
+    //         window.location.reload();
+
+
+    //     } catch (error: any) {
+    //         console.error('Error creating component:', error.message || error);
+    //         // Close the loading toast
+    //         toast.dismiss(toastId);
+
+    //         // Show error toast
+    //         toast.error("Failed to Add new component. Please try again.", {
+    //             position: "top-right",
+    //             autoClose: 5000,
+    //             transition: Zoom,
+    //             hideProgressBar: false,
+    //         });
+    //     }
+    // };
+
     const addComp = async (data: any) => {
+        let toastId: any = null; // Initialize toastId to null
 
         try {
             let uploadedFile;
@@ -52,19 +113,18 @@ const AddComponents: React.FC<AddCompprops> = ({ isVisible, close }) => {
                 // Upload the file and get the response (metadata)
                 uploadedFile = await addCompServices.uploadFile(data.image);
                 console.info('Uploaded File:', uploadedFile.$id); // Log the file metadata
-
-
             }
+
             // Show loading toast while updating
-            const toastId = toast.loading("Adding component...", {
+            toastId = toast.loading("Adding component...", {
                 position: "top-right",
                 style: {
-
-                    color: "black  "
+                    color: "black"
                 },
                 hideProgressBar: false,
                 transition: Zoom,
             });
+
             // Now call createComponents with the file ID or null if no file was uploaded
             const component = await addCompServices.createComponents({
                 name: data.name,
@@ -73,11 +133,12 @@ const AddComponents: React.FC<AddCompprops> = ({ isVisible, close }) => {
                 quantity: data.quantity,
                 imageFile: uploadedFile ? uploadedFile.$id : null, // Pass the file ID or null if no file
             });
+
             // Close the modal
             close();
 
             // Close the loading toast
-            toast.dismiss(toastId);
+            if (toastId) toast.dismiss(toastId);
             toast.success("Component Added successfully!", {
                 position: "top-right",
                 autoClose: 1000,
@@ -87,10 +148,10 @@ const AddComponents: React.FC<AddCompprops> = ({ isVisible, close }) => {
 
             window.location.reload();
 
-
         } catch (error: any) {
             console.error('Error creating component:', error.message || error);
-            // Close the loading toast
+
+            // Close the loading toast if it was created
             toast.dismiss(toastId);
 
             // Show error toast
@@ -102,6 +163,7 @@ const AddComponents: React.FC<AddCompprops> = ({ isVisible, close }) => {
             });
         }
     };
+
 
 
 
@@ -154,7 +216,7 @@ const AddComponents: React.FC<AddCompprops> = ({ isVisible, close }) => {
                         addComp(values)
                         resetForm()
                         // Added code to reset the image preview upon form submission
-                        const preview = document.getElementById('image-preview');
+                        const preview = document.getElementById('image-preview') as HTMLImageElement;
                         if (preview) {
                             preview.src = "";
                             preview.style.display = 'none';
@@ -180,7 +242,7 @@ const AddComponents: React.FC<AddCompprops> = ({ isVisible, close }) => {
                             </div>
 
                             {/* Category Field */}
-                            <div className='px-2 relative'>
+                            <div className='relative'>
                                 <label htmlFor="category" className="block font-semibold mb-1">
                                     Category
                                 </label>
@@ -242,8 +304,15 @@ const AddComponents: React.FC<AddCompprops> = ({ isVisible, close }) => {
 
 
                             {/* Image Field */}
-                            <div className="flex flex-col  space-y-2">
-                                <label htmlFor="image" className="text-md md:text-xl block font-semibold mb-1">
+
+
+
+
+                            <div className="flex flex-col space-y-2">
+                                <label
+                                    htmlFor="image"
+                                    className="text-md md:text-xl block font-semibold mb-1"
+                                >
                                     Image
                                 </label>
                                 <div className="relative w-full h-60 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center cursor-pointer overflow-hidden">
@@ -254,8 +323,11 @@ const AddComponents: React.FC<AddCompprops> = ({ isVisible, close }) => {
                                     {/* Image Preview */}
                                     <Image
                                         id="image-preview"
+                                        src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" // A 1x1 transparent pixel
+                                        width={1} // Minimum value
+                                        height={1} // Minimum value
                                         className="absolute bg-white inset-0 w-full h-full object-cover"
-                                        style={{ display: 'none' }}
+                                        style={{ display: "none" }}
                                         alt="Preview"
                                     />
                                     <input
@@ -264,26 +336,29 @@ const AddComponents: React.FC<AddCompprops> = ({ isVisible, close }) => {
                                         name="image"
                                         accept="image/*"
                                         capture="environment"
-                                        className="absolute bg-white  inset-0 opacity-0 cursor-pointer"
+                                        className="absolute bg-white inset-0 opacity-0 cursor-pointer"
                                         onChange={(event) => {
-                                            const file = event.currentTarget.files[0];
-                                            if (file) {
+                                            const files = event.currentTarget.files;
+                                            if (files && files[0]) {
+                                                const file = files[0];
                                                 const reader = new FileReader();
                                                 reader.onload = () => {
-                                                    const preview = document.getElementById('image-preview');
+                                                    const preview = document.getElementById("image-preview") as HTMLImageElement;
                                                     if (preview) {
-                                                        preview.src = reader.result as string;
-                                                        preview.style.display = 'block';
+                                                        preview.src = reader.result as string; // Set dynamic src
+                                                        preview.style.display = "block"; // Show the image
                                                     }
                                                 };
                                                 reader.readAsDataURL(file);
-                                                setFieldValue('image', file); // Set the image in Formik's state
+                                                setFieldValue("image", file); // Set the image in Formik's state
                                             }
+
                                         }}
                                     />
                                 </div>
                                 <ErrorMessage name="image" component="div" className="text-red-600 text-sm" />
                             </div>
+
 
 
                             {/* Buttons */}

@@ -14,7 +14,7 @@ export default function HomePage() {
         visible={true}
         height="80"
         width="80"
-        color="#4fa94d"
+        color="#3B82F6"
         ariaLabel="puff-loading"
         wrapperStyle={{}}
         wrapperClass=""

@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react';
-import { FaArrowRight, FaChevronUp } from 'react-icons/fa';
+import { FaChevronUp } from 'react-icons/fa';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import jsPDF from "jspdf";
@@ -50,28 +50,28 @@ const ExportComponents: React.FC = () => {
     // Handle form submission and PDF generation
     const generatePDF = (category: any, components: any): boolean => {
         console.dir("comp before cond ", components);
-    
+
         if (!components || components.length === 0) {
             toast.warn("No components available to export.");
             return false;
         }
-    
+
         const filteredComponents = category === "All"
             ? components
             : components.filter((component: any) => component.category === category);
-    
+
         if (filteredComponents.length === 0) {
             toast.warn("No matching components for the selected category.");
             return false;
         }
-    
+
         const doc = new jsPDF();
-    
+
         // Set the title
         doc.setFont("Times New Roman", "bold"); // Make title bold
         doc.setFontSize(18);
         doc.text("I Tech Inventory", 105, 20, { align: "center" });
-    
+
         // Prepare table data
         const tableData = filteredComponents.map((component: any, index: any) => [
             index + 1,
@@ -80,39 +80,31 @@ const ExportComponents: React.FC = () => {
             component.location,
             component.quantity,
         ]);
-    
+
         // Define table columns
         const tableColumns = ["Sr. No", "Name", "Category", "Location", "Quantity"];
-    
+
         // Add the table to the PDF
+        
         doc.autoTable({
             head: [tableColumns],
             body: tableData,
             startY: 30, // Adjust start position after the title
         });
-    
+
         // Save the PDF
         doc.save("exported_inventory.pdf");
-    
+
         return true;
     };
-    
+
     const handleSubmit = (values: any) => {
         const isSuccessful = generatePDF(values.category, components);
-    
+
         if (isSuccessful) {
             toast.success("PDF exported successfully!");
         }
     };
-    
-
-
-
-
-  
-
-
-
 
 
     return (
@@ -157,7 +149,7 @@ const ExportComponents: React.FC = () => {
                                 >
                                     Export
                                 </button>
-                                <Link href = "/">
+                                <Link href="/">
                                     <button
 
                                         className="border border-blue-600 px-4 py-2 rounded"

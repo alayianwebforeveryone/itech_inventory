@@ -15,11 +15,18 @@ const Logout = () => {
     authService
       .logout()
       .then(() => {
+        // Clear localStorage
+        localStorage.removeItem("user"); // Remove the user data
+
+        // Dispatch logout action
         dispatch(logout());
+
+        // Redirect to the home page
         router.push("/");
-        })
-      .catch((error:any) => {
-        });
+      })
+      .catch((error: any) => {
+        console.error("Logout error:", error);
+      });
   };
 
   return (

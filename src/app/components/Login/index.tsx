@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import authService from "@/app/appwrite/auth";
 import {login as loginAction} from "../../redux/slices/authSlice"
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 interface LoginFormValues {
   email: string;
   password: string;
@@ -38,18 +39,21 @@ const Login: React.FC = () => {
       if (session) {
         const userData = await authService.getCurrentUser();
         dispatch(loginAction(userData))
+        toast.success("Login Successfully!")
         localStorage.setItem("user", JSON.stringify(userData));
+
         router.push("/");
       }
     } catch (error:any) {
       setError(error.message);
+      toast.warn(error.message)
     }
   };
 
 
   return (
     <>
-      <div className="pt-40">
+      <div className="pt-40 bg-white px-8 sm:px-0  ">
         <Formik
           initialValues={{
             email: "",
@@ -62,8 +66,8 @@ const Login: React.FC = () => {
           }}
         >
           {({ isValid, dirty }) => (
-            <div className="max-w-sm sm:max-w-md lg:max-w-lg shadow-xl border-2 mx-auto flex flex-col text-center py-10 px-4 sm:px-6 bg-white border-[#68a1ec] rounded-2xl">
-              <h1 className="font-bold text-[1.8rem] sm:text-[2rem] leading-[1.875rem] sm:leading-[2.4375rem] text-[#68a1ec]">
+            <div className="max-w-sm sm:max-w-md lg:max-w-lg shadow-xl border-2 mx-auto flex flex-col text-center py-10  sm:px-6  bgColor  rounded-2xl">
+              <h1 className="text-3xl px-8   text-center text-[#7B7B7B] font-extrabold my-4 sm:my-12 ">
                 Login
               </h1>
               {error && <p className="text-red-600">{error}</p>}
@@ -72,7 +76,7 @@ const Login: React.FC = () => {
                 <div className="flex w-full flex-col mb-4">
                   <label
                     htmlFor="email"
-                    className="text-[1rem] sm:text-[1.25rem] leading-[1.25rem] sm:leading-[1.5rem] text-left mb-2 font-bold"
+                    className="text-[1rem]  sm:text-[1.25rem] leading-[1.25rem] sm:leading-[1.5rem] text-left mb-2 font-bold"
                   >
                     Email
                   </label>
@@ -82,7 +86,7 @@ const Login: React.FC = () => {
                         {...field}
                         type="email"
                         required
-                        className="p-3 w-full border rounded-lg bg-[#E7EEF0] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-[#68a1ec]"
+                        className="p-3 w-full border rounded-lg bg-white  focus:outline-none focus:ring-2 focus:ring-blue-500 "
                       />
                     )}
                   </Field>
@@ -108,7 +112,7 @@ const Login: React.FC = () => {
                           {...field}
                           type="password"
                           required
-                          className="p-3 w-full border rounded-lg bg-[#E7EEF0] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-[#9747FF]"
+                          className="p-3 w-full border rounded-lg bg-white  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-[#9747FF]"
                         />
                       </div>
                     )}

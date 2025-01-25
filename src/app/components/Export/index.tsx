@@ -112,7 +112,7 @@ const ExportComponents: React.FC = () => {
         <div className="    flex h-screen   flex-col justify-center items-center   rounded-xl ">
 
             <div className='bgColor  w-[80%] sm:w-[60%] md:w-[50%] lg:w-[40%] xl:w-[35%] rounded-xl  py-8 sm:px-8 border-2 hover:border-black  shadow-xl '>
-                <h2 className="text-3xl px-8  text-center text-[#7B7B7B] font-extrabold my-12 ">Export Inventory</h2>
+                <h2 className="text-xl px-2  sm:text-3xl   text-center text-[#7B7B7B] font-extrabold my-12 ">Export Inventory</h2>
                 <Formik
                     initialValues={initialValues}
                     validationSchema={validationSchema}

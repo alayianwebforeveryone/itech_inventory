@@ -68,7 +68,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ isVisible, close, compId }) =
             id='container'
             className="fixed inset-0 z-30 bg-black/25 flex justify-center items-center">
 
-            <div className="   hideScrollbar bg-[#EBE2F5] w-[80%] sm:w-[60%] md:w-[40%] mt-14 lg:w-[30%] h-[33%] pb-8 rounded-xl overflow-y-scroll hideScrollbar">
+            <div className="   hideScrollbar bg-[#EBE2F5] w-[80%] md:w-[50%] xl:w-[40%] mt-14  h-[35%] pb-8 rounded-xl overflow-y-scroll hideScrollbar">
                 {/* header */}
                 <div className="flex leading-none items-center sticky top-0 bg-[#60B0F4] left-0 box-border justify-between w-full overflow-hidden z-50 border-b-2 py-3">
                     <div className="flex justify-start mx-6 py-3 w-full items-baseline">

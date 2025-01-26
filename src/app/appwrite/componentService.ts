@@ -90,18 +90,31 @@ export class AddCompServices {
         console.log("Expecting image file", updatedData);
     
         try {
-            // Check if there is an image file to upload
+            // Fetch the current component data
+            const existingComponent = await this.databases.getDocument(
+                conf.appwriteDatabaseId,
+                conf.appwriteCollectionId,
+                compId
+            );
+    
+            // Check if a new image file is provided
             if (updatedData?.image && updatedData.image instanceof File) {
-                console.log("Uploading image file...");
+                console.log("Uploading new image file...");
                 const uploadedFile = await this.storage.createFile(
                     conf.appwriteBucketId,
                     ID.unique(), // Generate a unique ID for the file
                     updatedData.image
                 );
     
-                console.log("Uploaded File:", uploadedFile);
+                console.log("Uploaded New File:", uploadedFile);
     
-                // Use the file ID in the updated data
+                // Delete the old image file from storage
+                if (existingComponent.image) {
+                    await this.storage.deleteFile(conf.appwriteBucketId, existingComponent.image);
+                    console.log("Old image deleted from storage");
+                }
+    
+                // Update the image field in the data
                 updatedData.image = uploadedFile.$id;
             }
     
@@ -124,6 +137,7 @@ export class AddCompServices {
             throw error;
         }
     }
+    
     
     
     
@@ -156,7 +170,7 @@ export class AddCompServices {
             if (component.image) {
                 // Delete the associated image from the bucket
                 await this.storage.deleteFile(conf.appwriteBucketId, component.image);
-                console.log('Associated image deleted successfully');
+                console.log('Associated image deleted successfully', component.image);
             } else {
                 console.warn('No associated image found for this component');
             }

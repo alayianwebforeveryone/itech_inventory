@@ -117,6 +117,7 @@ const MainComp: React.FC = () => {
                      <option label="All" />
                      <option value="SMD">SMD</option>
                      <option value="Through hole">Through Hole</option>
+                     <option value="Others">Others</option>
                   </select>
                   <span className="absolute right-[12px] top-[22px] transform -translate-y-1/2 text-black  pointer-events-none">
                      <FaChevronUp />

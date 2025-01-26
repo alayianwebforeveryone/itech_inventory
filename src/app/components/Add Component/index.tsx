@@ -32,18 +32,19 @@ const AddComponents: React.FC<AddCompprops> = ({ isVisible, close }) => {
     const validationSchema = Yup.object({
         name: Yup.string()
             .required('Name is required')
-            .min(3, 'Name should be at least 3 characters long'),
+            .min(3, 'Name should be at least 3 characters long')
+            .max(60, 'Maximun 60  characters allowed '),
         category: Yup.string()
             .required('Category is required')
-            .oneOf(['SMD', 'Through hole'], 'Invalid category'),
+            .oneOf(['SMD', 'Through hole', 'Others'], 'Invalid category'),
         location: Yup.string().required('Location is required'),
         image: Yup.mixed()
             .test('fileFormat', 'Only PNG or JPG files are allowed', (value: any) => {
-                return value && (value.type === 'image/png' || value.type === 'image/jpeg');
+                return value && (value.type === 'image/png' || value.type === 'image/jpeg' || value.type === 'image/jpeg'  || value.type === 'image/svg' );
             }),
     });
 
-   
+
 
     const addComp = async (data: any) => {
         const toastId = toast.loading("Adding component...", {
@@ -57,16 +58,16 @@ const AddComponents: React.FC<AddCompprops> = ({ isVisible, close }) => {
             hideProgressBar: false,
             transition: Zoom,
         });
-    
+
         try {
             let uploadedFile;
-    
+
             // Check if an image file is provided
             if (data.image) {
                 uploadedFile = await addCompServices.uploadFile(data.image);
                 console.info('Uploaded File:', uploadedFile.$id); // Log the file metadata
             }
-    
+
             // Call createComponents with the file ID or null if no file was uploaded
             await addCompServices.createComponents({
                 name: data.name,
@@ -75,7 +76,7 @@ const AddComponents: React.FC<AddCompprops> = ({ isVisible, close }) => {
                 quantity: data.quantity,
                 imageFile: uploadedFile ? uploadedFile.$id : null,
             });
-    
+
             // Update the toast to indicate success
             toast.update(toastId, {
                 render: "Component Added successfully!",
@@ -83,23 +84,26 @@ const AddComponents: React.FC<AddCompprops> = ({ isVisible, close }) => {
                 isLoading: false,
                 autoClose: 2000,
             });
-    
+
             // Close the modal and refresh the page
             close();
             window.location.reload();
         } catch (error: any) {
             console.error('Error creating component:', error.message || error);
-    
+
             // Update the toast to indicate an error
             toast.update(toastId, {
                 render: "Failed to Add new component. Please try again.",
                 type: "error",
                 isLoading: false,
-                autoClose: 5000,
+                autoClose: 5000, 
+                style:{
+                    color: "red"
+                }
             });
         }
     };
-    
+
 
 
 
@@ -192,6 +196,7 @@ const AddComponents: React.FC<AddCompprops> = ({ isVisible, close }) => {
                                     <option value="" label="Select a category" />
                                     <option value="SMD" label="SMD" />
                                     <option value="Through hole" label="Through hole" />
+                                    <option value="Others" label="Others" />
                                 </Field>
                                 <span className="absolute right-6 top-[53px] transform -translate-y-1/2 text-black  pointer-events-none">
                                     <FaChevronUp />
@@ -226,12 +231,12 @@ const AddComponents: React.FC<AddCompprops> = ({ isVisible, close }) => {
                                 >
                                     <option value="" label="Select quantity" />
                                     <option value="0-10" label="0-10" />
-                                    <option value="10-30" label="10-40" />
-                                    <option value="0-10" label="40-80" />
-                                    <option value="10-30" label="80-100" />
-                                    <option value="0-10" label="100-140" />
-                                    <option value="10-30" label="140-200" />
-                                    <option value="10-30" label="200+" />
+                                    <option value="10-40" label="10-40" />
+                                    <option value="40-80" label="40-80" />
+                                    <option value="80-100" label="80-100" />
+                                    <option value="100-140" label="100-140" />
+                                    <option value="140-200" label="140-200" />
+                                    <option value="200+" label="200+" />
                                 </Field>
                                 <span className="absolute right-5 top-[57px] transform -translate-y-1/2 text-black  pointer-events-none">
                                     <FaChevronUp />
@@ -272,7 +277,7 @@ const AddComponents: React.FC<AddCompprops> = ({ isVisible, close }) => {
                                         id="image"
                                         name="image"
                                         accept="image/*"
-                                        capture="environment"
+                                        
                                         className="absolute bg-white inset-0 opacity-0 cursor-pointer"
                                         onChange={(event) => {
                                             const files = event.currentTarget.files;

@@ -22,7 +22,7 @@ const validationSchema = Yup.object({
         .min(3, "Name should be at least 3 characters long")
         .required("Name is required"),
     category: Yup.string()
-        .oneOf(["SMD", "Through hole"], "Invalid category")
+        .oneOf(["SMD", "Through hole", 'Others'], "Invalid category")
         .required("Category is required"),
     location: Yup.string(),
     quantity: Yup.string().required("Quantity is required"),
@@ -182,6 +182,7 @@ const EditComponents: React.FC<EditCompprops> = ({ isVisible, close, existingDat
                             <option value="" label="Select a category" />
                             <option value="SMD" label="SMD" />
                             <option value="Through hole" label="Through hole" />
+                            <option value="Others" label="Others" />
                         </select>
                         <span className="absolute right-4 top-[53px] transform -translate-y-1/2 text-black pointer-events-none">
                             <FaChevronUp />

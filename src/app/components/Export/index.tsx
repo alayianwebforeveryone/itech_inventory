@@ -27,7 +27,7 @@ const ExportComponents: React.FC = () => {
     // Validation schema using Yup
     const validationSchema = Yup.object({
         category: Yup.string()
-            .oneOf(['SMD', 'Through hole', 'All'], 'Invalid category'),
+            .oneOf(['SMD', 'Through hole', 'Others',  'All'], 'Invalid category'),
     });
 
     useEffect(() => {
@@ -133,7 +133,8 @@ const ExportComponents: React.FC = () => {
                                 >
                                     <option value="All" label="All" />
                                     <option value="SMD" label="SMD" />
-                                    <option value="Through hole" label="Through hole" />
+                                    <option value="Through hole">Through Hole</option>
+                                    <option value="Others">Others</option>
                                 </Field>
                                 <span className="absolute right-4 top-[47px] transform -translate-y-1/2 text-black  pointer-events-none">
                                     <FaChevronUp />

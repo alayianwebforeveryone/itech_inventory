@@ -304,7 +304,7 @@ const AddComponents: React.FC<AddCompprops> = ({ isVisible, close }) => {
 
 
                             {/* Buttons */}
-                            <div className="flex justify-between xl:px-24">
+                            <div className="flex justify-between lg:px-8  2xl:px-24 ">
                                 <button
                                     type="submit"
                                     className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
@@ -312,7 +312,7 @@ const AddComponents: React.FC<AddCompprops> = ({ isVisible, close }) => {
                                     Add
                                 </button>
                                 <button
-                                    type="reset"
+                                    onClick={close}
                                     className=" border border-blue-600   px-4 py-2 rounded "
                                 >
                                     Cancel

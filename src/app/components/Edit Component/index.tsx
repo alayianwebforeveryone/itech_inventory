@@ -265,7 +265,7 @@ const EditComponents: React.FC<EditCompprops> = ({ isVisible, close, existingDat
                         />
                     </div>
 
-                    <div className="flex justify-between xl:px-24">
+                    <div className="flex justify-between    lg:px-8  2xl:px-24">
                         <button
                             type="submit"
                             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"

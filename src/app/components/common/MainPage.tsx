@@ -91,10 +91,10 @@ const MainComp: React.FC = () => {
    };
 
    return (
-      <div className="bgColor relative  pt-24">
+      <div className="bgColor relative  pt-[105px] sm:pt-[80px] customPadding md:pt-[80px] lg:pt-[80px] ">
          <AddComponents isVisible={showModal} close={() => setShowModal(false)} />
-         <div className="flex flex-col md:flex-row fixed shadow-md bg-white z-20 w-[100%] pt-16 md:pt-8 pb-4   justify-between px-14 items-center">
-            <div className="font-extrabold w-full bg-gray-200 flex md:w-[40%] lg:w-[60%] justify-between py-2 text-[#7B7B7B] rounded-xl px-4 ">
+         <div className="flex flex-col md:flex-row fixed shadow-md bg-white z-20 w-[100%] pt-2  md:pt-2 pb-2   border-b-2      justify-between px-8  md:px-16 items-center">
+            <div className="font-extrabold w-full bg-gray-200 flex md:w-[40%] lg:w-[60%] justify-between py-1  text-[#7B7B7B] rounded-xl px-4 ">
                <input
                   className="bg-gray-200 w-[80%] py-1 focus:outline-none"
                   type="text"
@@ -107,7 +107,7 @@ const MainComp: React.FC = () => {
                </figure>
             </div>
 
-            <div className={`md:w-[60%]  lg:w-[40%] flex-col md:flex-row w-full mt-4 md:mt-0 justify-end flex ${userData.name === "Admin" ? "justify-end]" : "justify-end"} gap-2`}>
+            <div className={`md:w-[60%]  lg:w-[40%] flex-col md:flex-row w-full mt-2 md:mt-0 justify-end flex ${userData.name === "Admin" ? "justify-end]" : "justify-end"} gap-2`}>
                <div className="relative w-[100%] md:w-[40%] ">
                   <select
                      id="category"

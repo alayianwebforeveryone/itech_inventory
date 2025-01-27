@@ -10,5 +10,17 @@ input:-internal-autofill-selected {
 @media (min-width: 400px) and (max-width: 500px) {
   .custom-style {
      height: 500px;
+     
+  }
+  .customPadding{
+         padding-top: 100px;
   }
 }
+
+
+/* @media (min-width: 600px) and (max-width: 700px) {
+  
+  .customPadding{
+         padding-top: 75px;
+  }
+} */

@@ -32,9 +32,9 @@ const Header: React.FC = () => {
 
     return (
         <>
-            <header className="px-8 sm:px-12 md:px-16 fixed top-0 z-50 bg-white left-0 shadow w-full ">
-                <div className='flex     flex-col sm:flex-row justify-between items-center pt-4       text-white'>
-                    <div className="flex  items-center justify-center gap-8 ">
+            <header className="px-6 py-2  sm:px-6 md:px-16 fixed top-0 z-50 bg-white left-0  w-full border-b-2  ">
+                <div className='flex     flex-col sm:flex-row justify-between items-center      text-white'>
+                    <div className="flex  items-center justify-center gap-2 ">
                         {status &&
                             <Image
                                 src={menuIcon}
@@ -47,13 +47,15 @@ const Header: React.FC = () => {
 
                         }
 
-                        <h1 className="font-extrabold xl:text-[2.475rem] md:text-[1.5rem] text-[1rem] text-[#7B7B7B]">
+                        <h1 className="font-extrabold xl:text-[2.475rem] md:text-[1.2rem] text-[1rem] text-[#7B7B7B]">
                             Inventory Management System
                         </h1>
                     </div>
                     <div className=' '>
                         <figure>
-                            <Image src={logo} alt="profile" />
+                            <Image
+                            className='w-80 h-16  '
+                            src={logo} alt="profile" />
                         </figure>
                     </div>
                 </div>

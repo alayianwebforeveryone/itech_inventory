@@ -133,12 +133,12 @@ const MainComp: React.FC = () => {
             </div>
          </div>
 
-         <div className=" pt-64 md:pt-32 bg-white   rounded-xl">
+         <div className=" pt-40 md:pt-32 bg-white   rounded-xl">
             {isLoading ? (
                // Skeleton loader
                <SkeletonCard />
             ) : filteredComponents.length > 0 ? (
-               <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 xl:grid-cols-4 gap-x-4 pb-16 gap-y-12 justify-items-end  px-12 ">
+               <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 xl:grid-cols-4 gap-x-4 pb-16 gap-y-12 justify-items-end  px-8 md:px-12  ">
                   {filteredComponents.map((comp, index) => (
                      <CardComp Cardkey={index} data={comp} />
                   ))}

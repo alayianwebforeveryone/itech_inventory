@@ -32,7 +32,7 @@ const Header: React.FC = () => {
 
     return (
         <>
-            <header className="px-6 py-2  sm:px-6 md:px-16 fixed top-0 z-50 bg-white left-0  w-full border-b-2  ">
+            <header className="px-6 py-2  sm:px-6 md:pl-16 md:pr-10 fixed top-0 z-50 bg-white left-0  w-full border-b-2  ">
                 <div className='flex     flex-col sm:flex-row justify-between items-center      text-white'>
                     <div className="flex  items-center justify-center gap-2 ">
                         {status &&
